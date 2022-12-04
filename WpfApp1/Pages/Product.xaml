@@ -1,0 +1,81 @@
+﻿<Page x:Class="WpfApp1.Product"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp1"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Product" Background="Pink">
+
+    <Grid>
+        <StackPanel>
+            <StackPanel>
+                <GroupBox Header="Поиск" Margin="20,0,20,0">
+                    <TextBox Name="tbSearch" TextChanged="tbSearch_TextChanged" Height="26" FontSize="16"></TextBox>
+                </GroupBox>
+                <StackPanel Orientation="Horizontal">
+                    <GroupBox Header="Сортировка по типу товара" Margin="20, 0, 20 ,0" >
+                        <ComboBox Name="cmbType" SelectionChanged="cmbType_SelectionChanged" Width="250" ></ComboBox>
+                    </GroupBox>
+                    <GroupBox Header="Сортировка по цене товара" Margin="20, 0, 20 ,0" >
+                        <ComboBox Name="cmbSort" SelectionChanged="cmbType_SelectionChanged" Width="250" >
+                            <ComboBoxItem>Без сортировки</ComboBoxItem>
+                            <ComboBoxItem>По MIN</ComboBoxItem>
+                            <ComboBoxItem>По MAX</ComboBoxItem>
+                        </ComboBox>
+                    </GroupBox>
+                    <CheckBox Name="cbPhoto" Checked="cbPhoto_Checked" Unchecked="cbPhoto_Checked" Margin="20, 20, 20 , 20" FontWeight="DemiBold">Со скидкой</CheckBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,10">
+                    <Button HorizontalAlignment="Left" Margin="5, 0, 0, 0" Height="34" Width="40" VerticalAlignment="Top" Name="btnCreateProduct" Click="btnCreateProduct_Click" Padding="0, 0, 0, 5" FontWeight="Bold">+</Button>
+                    <TextBlock Name="tbCount" Margin="15, 5, 0, 0" ></TextBlock>
+                </StackPanel>
+                
+            </StackPanel>
+            <ListView Name="listProduct" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" Background="Pink">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel HorizontalAlignment="Center"></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="5" CornerRadius="5" BorderThickness="1" Background="{Binding DiscountColor}" BorderBrush="Maroon">
+                            <Grid Name="gridProduct" Width="220" Height="180">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Title, StringFormat=Название: {0}}" FontSize="14" FontWeight="DemiBold"/>
+                                    <TextBlock Text="{Binding T_Type.Type, StringFormat=Тип: {0}}" FontSize="14"/>
+                                    <TextBlock Text="{Binding Manufact_Provider}" FontSize="11"/>
+
+                                    <TextBlock Name="SostavPR" TextWrapping="Wrap" Uid="{Binding id_product}" FontSize="11" Loaded="SostavPR_Loaded"/>
+
+                                    <TextBlock Name="DiscountPT" TextWrapping="Wrap" Uid="{Binding id_product}" Loaded="DiscountPT_Loaded" FontSize="14"/>
+                                    <TextBlock Name="PricePT" TextWrapping="Wrap" Uid="{Binding id_product}"  Loaded="PricePT_Loaded" FontSize="14"/>
+                                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                        <Button Uid="{Binding id_product}" Height="30" Margin="5,0,0,0" FontSize="14" Width="100" Content="Изменить" Name="btnupdate" Click="btnupdate_Click"></Button>
+                                        <Button Uid="{Binding id_product}" Height="30" Margin="10,0,0,0" FontSize="14" Width="100" Content="Удалить" Click="Button_Click"></Button>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--Меню с номерами страниц-->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <GroupBox Header="Кол-во записей на странице">
+                    <TextBox Name="txtPageCount" TextChanged="txtPageCount_TextChanged"/>
+                </GroupBox>
+                
+                <TextBlock Name="txtPrev" Uid="prev" Text=" &lt; " MouseDown="GoPage_MouseDown" FontSize="18" Margin="0,15,0,0"/>
+                <TextBlock Name="txt1" Uid="1" Text="{Binding  Path = NPage[0]}" Visibility="{Binding Visible[0]}" FontWeight="{Binding Bold[0]}" MouseDown="GoPage_MouseDown" FontSize="18" Margin="0,15,0,0"/>
+                <TextBlock Name="txt2" Uid="2" Text="{Binding  Path = NPage[1]}" Visibility="{Binding Visible[1]}" FontWeight="{Binding Bold[1]}" MouseDown="GoPage_MouseDown" FontSize="18" Margin="0,15,0,0"/>
+                <TextBlock Name="txt3" Uid="3" Text="{Binding  Path = NPage[2]}" Visibility="{Binding Visible[2]}" FontWeight="{Binding Bold[2]}" MouseDown="GoPage_MouseDown" FontSize="18" Margin="0,15,0,0"/>
+                <TextBlock Name="txt4" Uid="4" Text="{Binding  Path = NPage[3]}" Visibility="{Binding Visible[3]}" FontWeight="{Binding Bold[3]}" MouseDown="GoPage_MouseDown" FontSize="18" Margin="0,15,0,0"/>
+                <TextBlock Name="txt5" Uid="5" Text="{Binding  Path = NPage[4]}" Visibility="{Binding Visible[4]}" FontWeight="{Binding Bold[4]}" MouseDown="GoPage_MouseDown" FontSize="18" Margin="0,15,0,0"/>
+                <TextBlock Name="txtNext" Uid="next" Text=" &gt;" MouseDown="GoPage_MouseDown" FontSize="18" Margin="0,15,0,0"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>
